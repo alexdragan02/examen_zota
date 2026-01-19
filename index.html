@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Quizescu — Examen SIEB (Corectat)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --clr-bg: #f0f4f8;
+      --clr-card-bg: rgba(255,255,255,0.6);
+      --clr-accent: #4e89ff;
+      --clr-accent-hover: #3367d6;
+      --clr-success: #34a853;
+      --clr-error:   #d93025;
+      --clr-text: #1e213a;
+      --radius: 12px;
+      --transition: 0.3s ease;
+      --font: 'Roboto', sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; padding: 0;
+      font-family: var(--font);
+      background: var(--clr-bg);
+      color: var(--clr-text);
+      display: flex; flex-direction: column; align-items: center;
+      min-height: 100vh;
+    }
+    header {
+      width: 100%; max-width: 800px;
+      padding: 1rem; text-align: center;
+      background: linear-gradient(90deg, var(--clr-accent), #8f78ff);
+      color: #fff; border-bottom-left-radius: var(--radius);
+      border-bottom-right-radius: var(--radius);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    header h1 { margin: 0; font-size: 1.8rem; }
+
+    #floating-step {
+      position: fixed; top: 20px; right: 20px;
+      background: rgba(66,133,244,0.9); color: #fff;
+      padding: 0.5rem 1rem; border-radius: var(--radius);
+      font-weight: 500; pointer-events: none; z-index: 10;
+    }
+
+    #selection {
+      width: 100%; max-width: 800px; padding: 1rem;
+      margin-top: 1rem;
+    }
+    .subtest-card {
+      background: #fff; border-radius: var(--radius);
+      padding: 1rem; margin-bottom: 1rem;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+      display: flex; justify-content: space-between; align-items: center;
+      cursor: pointer; transition: transform 0.2s;
+    }
+    .subtest-card:hover { transform: scale(1.02); }
+    .subtest-card p { margin: 0; font-weight: 500; }
+
+    #quiz {
+      width: 100%; max-width: 800px; padding: 0 1rem; margin-top: 1rem;
+    }
+    .question-container {
+      background: var(--clr-card-bg);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: var(--radius);
+      padding: 1.5rem; margin-bottom: 1rem;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.05);
+    }
+    .question-title {
+      font-size: 1.25rem; font-weight: 500;
+      margin-bottom: 1rem;
+    }
+    .answers-table {
+      width: 100%; border-collapse: separate;
+      border-spacing: 0 8px; margin-bottom: 1rem;
+    }
+    .answers-table td.answer {
+      padding: 14px 18px; border: 2px solid #ddd;
+      border-radius: var(--radius); background: #fff;
+      cursor: pointer; transition: all var(--transition);
+      user-select: none;
+    }
+    .answers-table td.answer:hover {
+      background: #fafafa; border-color: #ccc; transform: translateY(-2px);
+    }
+    .answers-table td.answer.selected {
+      background: #e8f0fe; border-color: var(--clr-accent);
+    }
+    .answers-table td.answer.correct {
+      background: #e0f7e9 !important; border-color: var(--clr-success) !important;
+    }
+    .answers-table td.answer.incorrect {
+      background: #ffeaea !important; border-color: var(--clr-error) !important;
+    }
+
+    .controls {
+      display: flex; justify-content: flex-end; gap: 0.5rem;
+    }
+    .btn {
+      padding: 0.6rem 1.2rem; border: none; border-radius: var(--radius);
+      font-size: 0.95rem; font-weight: 500; cursor: pointer;
+      transition: background var(--transition), box-shadow 0.2s;
+    }
+    .btn-check { background: var(--clr-accent); color: #fff; }
+    .btn-check:disabled { background: #a0c3ff; cursor: not-allowed; }
+    .btn-reset { background: #fff; color: #666; border: 2px solid #ddd; }
+    .btn-finish { background: var(--clr-success); color: #fff; margin-top: 1rem; }
+
+    #navigation { width: 100%; max-width: 800px; padding: 0 1rem; margin-bottom: 2rem; }
+    #finish-container { width: 100%; max-width: 800px; padding: 1rem; text-align: center; }
+  </style>
+</head>
+<body>
+
+  <div id="floating-step">Selectează un subtest</div>
+  <header><h1>🎯 Quizescu: SIEB</h1></header>
+
+  <div id="selection"></div>
+  <main id="quiz" style="display:none;"></main>
+  <div id="navigation" class="controls" style="display:none;"></div>
+  <div id="finish-container"></div>
+
+  <script>
+    // Întrebări actualizate conform cerinței
+    const questions = [
+      {
+        question: "Un CRM reprezintă:",
+        answers: [
+          "o strategie de afacere ce selectează și administrează cele mai importante relații cu clienți",
+          "o soluție bazată pe tehnologii Internet pentru procurarea de bunuri și servicii",
+          "Monitorizarea vânzărilor și produselor rămase disponibile în stoc",
+          "o strategie de piață prin care producătorul își selectează clienții spre care țintește",
+          "Achiziția bunurilor și serviciilor pe măsură ce este nevoie de ele"
+        ],
+        correctIndex: 0
+      },
+      {
+        question: "Faza a 3-a din evoluția sistemelor ERP este reprezentată de :",
+        answers: [
+          "Manufacturing Resource Planning (MRP II)",
+          "Manufacturing Requirements Planning (MRP)",
+          "Capacity Requirements Planning",
+          "Enterprise Resource Planning III (ERP III)",
+          "Material Requirements Planning (MRP)"
+        ],
+        correctIndex: 0
+      },
+      {
+        question: "Ce schimbări au influențat sistemele ERP pentru a putea fi achiziționate și de către companii mai mici?",
+        answers: [
+          "scăderea complexității acestora",
+          "accelerarea ciclului de inovație-producție-demodat",
+          "îmbunătățirea lunară a tehnicii de calcul și creșterea prețurilor",
+          "îmbunătățirea continuă a tehnicii de calcul și scăderea prețurilor",
+          "creșterea numărului de module pe care este structurat un ERP"
+        ],
+        correctIndex: 3
+      },
+      {
+        question: "Acronimul DMZ provine de la ?",
+        answers: [
+          "Demilitarized Zone",
+          "Dual Model Zone",
+          "Dual Mode Zone",
+          "Demystified Zone",
+          "DeMined Zone"
+        ],
+        correctIndex: 0
+      },
+      {
+        question: "Faza a doua din evoluția sistemelor ERP se numește:",
+        answers: [
+          "Management Requirements Planning",
+          "Capacity Requirements Planning",
+          "Manufacturing Resource Planning",
+          "Material Requirements Planning",
+          "Enterprise Relocation Planning"
+        ],
+        correctIndex: 1
+      },
+      {
+        question: "Care sunt cele 3 direcții principale de administrare a lanțului de aprovizionare (SCM)?",
+        answers: [
+          "fluxul economico-financiar, fluxul monetar, fluxul produsului",
+          "fluxul produsului, fluxul clientului, fluxul de achiziție",
+          "fluxul informațional, analiza financiară, livrarea produsului",
+          "analiza financiară, analiza produsului, analiza informațională",
+          "fluxul produsului, fluxul informațional, fluxul financiar"
+        ],
+        correctIndex: 4
+      },
+      {
+        question: "Aplicația CRM are în centrul atenției:",
+        answers: [
+          "Produsul",
+          "Angajatul",
+          "Producătorul",
+          "Compania",
+          "Clientul"
+        ],
+        correctIndex: 4
+      },
+      {
+        question: "Utilitatea unui CRM analitic este dată de:",
+        answers: [
+          "îmbunătățirea relațiilor cu clienții",
+          "Creșterea vânzărilor",
+          "Managementul datelor clienților",
+          "Analiza asupra furnizorilor și clienților (vânzări, plăți, termene contractuale)",
+          "Managementul datelor furnizorilor"
+        ],
+        correctIndex: 3
+      },
+      {
+        question: "Ce aspect NU caracterizează ERP?",
+        answers: [
+          "oferirea bazei unui comerț electronic eficient",
+          "crearea unei legături atât cu furnizorii, cât și cu clienții într-un lanț complet furnizor-client",
+          "dezvoltarea unui proces de afacere pentru luarea deciziilor",
+          "imposibilitatea integrării funcționale multiple între departamente",
+          "oferirea unei posibilități de lucru la înalte nivele de servicii pentru consumatori, productivitate, simultan cu reducerea costurilor"
+        ],
+        correctIndex: 3
+      },
+      {
+        question: "Licitația tăcută (silent auction) presupune că:",
+        answers: [
+          "licitațiile se depun în plic închis simultan, astfel încât nici unul dintre ofertanți nu știe de oferta celuilalt",
+          "licitatorii își scriu prețurile oferite pe bucăți de hârtie, după ce articolele sunt afișate, putând cunoaște sau nu prețurile propuse de către ceilalți",
+          "participanții licitează în mod direct și deschis între ei, finalizarea licitației mutându-se face atunci când este atins fie un preț prestabilit, fie ultimul preț oferit înainte de expirarea licitației",
+          "se pleacă de la un preț maxim cerut de vânzător, care poate fi coborât până când un cumpărător acceptă prețul",
+          "prețul plătit nu este cel propus de câștigător, ci al doilea preț ca valoare"
+        ],
+        correctIndex: 1
+      },
+      {
+        question: "Care nu este scopul departamentului Customer Intelligence într-o companie ?",
+        answers: [
+          "încadrare clienților în profile și segmente",
+          "integrarea datelor despre clienți",
+          "analiza comportamentului clienților",
+          "recunoașterea și adresarea corectă a nevoilor clienților",
+          "luarea de decizii strategice în companie"
+        ],
+        correctIndex: 4
+      },
+      {
+        question: "Care dintre următoarele standarde este folosit cu precădere în aplicațiile pentru e-business ?",
+        answers: [
+          "HTML",
+          "HTTP",
+          "XML",
+          "CSS",
+          "FTP"
+        ],
+        correctIndex: 2
+      },
+      {
+        question: "Ce cerință a aplicațiilor e-business are rolul de a asigura portabilitatea aplicațiilor?",
+        answers: [
+          "Standardizarea",
+          "Disponibilitatea",
+          "Scalabilitatea",
+          "Ușurința în administrare",
+          "Securitatea"
+        ],
+        correctIndex: 0
+      },
+      {
+        question: "Care dintre următorii factori este cel mai puțin important în contextul CRM-ului mobil?",
+        answers: [
+          "Oferirea unei bune securizări",
+          "Funcționalitatea Off-line",
+          "Ușurința în exploatare",
+          "Asigurarea informației corecte în timp real",
+          "Asigurarea de standarde deschise",
+          "Design competitiv al aplicației"
+        ],
+        correctIndex: 5
+      },
+      {
+        question: "Printre standardele folosite în aplicațiile de e-business întâlnim (selectați două):",
+        answers: [
+          "XML",
+          "OSI",
+          "ERP",
+          "IEEE",
+          "EDI"
+        ],
+        correctIndex: [0, 4]
+      },
+      {
+        question: "Care dintre următoarele afirmații NU este adevărată? SCM îi permite unei organizații să achiziționeze materii prime/produse/servicii:",
+        answers: [
+          "în cantități impuse de furnizor",
+          "la momentul oportun",
+          "în cantitatea corespunzătoare",
+          "în mod eficient",
+          "la costuri acceptabile"
+        ],
+        correctIndex: 0
+      },
+      {
+        question: "Ce presupune modelul de livrare cloud PaaS?",
+        answers: [
+          "livrarea de AaaS, probabil versiunea de cloud computing cu care este obișnuită să lucreze majoritatea oamenilor în fiecare zi",
+          "include mediul (baza de date, runtime, server web etc.) în care utilizatorii își pot construi, rula și compila aplicațiile fără să-și facă griji cu privire la infrastructura de bază",
+          "nu se pot gestiona datele și resursele aplicației",
+          "orice tip de produs intern",
+          "blocuri fundamentale de calcul ce pot fi închiriate: servere fizice sau virtuale, metode de stocare, rețele"
+        ],
+        correctIndex: 1
+      },
+      {
+        question: "Care este unul dintre scopurile E-Procurement-ului?",
+        answers: [
+          "accesul rapid la informații",
+          "maximizarea achizițiilor făcute de la vânzători",
+          "îmbunătățirea procesului de plată",
+          "asigurarea livrării la timp, aproape mereu",
+          "creșterea prețurilor de achiziție"
+        ],
+        correctIndex: 2
+      },
+      {
+        question: "Care dintre următoarele acronime reprezintă un standard de integrare a aplicațiilor de e-procurement ?",
+        answers: [
+          "SMTP",
+          "XBBL",
+          "ePXML",
+          "XBRL",
+          "XRL"
+        ],
+        correctIndex: 3
+      }
+    ];
+
+    // Configurare Subteste (19 întrebări total -> 10 + 9)
+    const subtestSizes = [10, 9];
+    let subtestStarts = [];
+    let acc = 0;
+    for (let s of subtestSizes) {
+      subtestStarts.push(acc);
+      acc += s;
+    }
+
+    // State
+    let currentSubtest = null;
+    let currentQuestionIndex = 0; // global index
+    let questionIndexInSubtest = 0;
+    let score = 0;
+    let userAnswers = [];
+    let subtestScores = new Array(subtestSizes.length).fill(null);
+
+    // DOM Elements
+    const selectionDiv = document.getElementById('selection');
+    const quizMain = document.getElementById('quiz');
+    const navDiv = document.getElementById('navigation');
+    const finishContainer = document.getElementById('finish-container');
+    const floatingStep = document.getElementById('floating-step');
+
+    // --- INIT ---
+    function init() {
+      renderSelection();
+    }
+
+    function renderSelection() {
+      quizMain.style.display = 'none';
+      navDiv.style.display = 'none';
+      finishContainer.innerHTML = '';
+      selectionDiv.innerHTML = '';
+      
+      let allDone = true;
+      let totalScore = 0;
+      let totalMax = 0;
+
+      subtestSizes.forEach((size, idx) => {
+        const isDone = subtestScores[idx] !== null;
+        if (!isDone) allDone = false;
+        
+        const card = document.createElement('div');
+        card.className = 'subtest-card';
+        card.innerHTML = `
+          <div>
+            <h3>Subtest ${idx + 1}</h3>
+            <p>${size} întrebări</p>
+          </div>
+          <div style="text-align:right;">
+             ${isDone 
+               ? `<span style="color:var(--clr-success); font-weight:bold;">${subtestScores[idx]}/${size}</span>` 
+               : `<span style="color:var(--clr-accent);">Start</span>`}
+          </div>
+        `;
+        card.onclick = () => startSubtest(idx);
+        selectionDiv.appendChild(card);
+        
+        if (isDone) {
+          totalScore += subtestScores[idx];
+          totalMax += size;
+        }
+      });
+
+      if (allDone) {
+        finishContainer.innerHTML = `
+          <div class="question-container" style="text-align:center;">
+            <h2>Felicitări! Ai completat toate subtestele.</h2>
+            <p style="font-size:1.5rem; margin:1rem 0;">Scor Total: <span style="color:var(--clr-accent);">${totalScore} / ${totalMax}</span></p>
+            <button class="btn btn-reset" onclick="location.reload()">Reîncepe Tot</button>
+          </div>
+        `;
+      }
+      
+      floatingStep.textContent = "Selectează un subtest";
+    }
+
+    function startSubtest(idx) {
+      currentSubtest = idx;
+      questionIndexInSubtest = 0;
+      currentQuestionIndex = subtestStarts[idx];
+      score = 0;
+      userAnswers = new Array(subtestSizes[idx]).fill(null);
+      
+      selectionDiv.innerHTML = '';
+      finishContainer.innerHTML = '';
+      quizMain.style.display = 'block';
+      navDiv.style.display = 'flex';
+      
+      loadQuestion();
+    }
+
+    function loadQuestion() {
+      const qData = questions[currentQuestionIndex];
+      const isMulti = Array.isArray(qData.correctIndex);
+      
+      // Update floating step
+      floatingStep.textContent = `Subtest ${currentSubtest + 1} | Întrebarea ${questionIndexInSubtest + 1}/${subtestSizes[currentSubtest]}`;
+
+      quizMain.innerHTML = `
+        <div class="question-container">
+          <div class="question-title">
+            ${questionIndexInSubtest + 1}. ${qData.question}
+            ${isMulti ? '<span style="font-size:0.8rem; color:var(--clr-accent); display:block; margin-top:5px;">(Alegeți toate variantele corecte)</span>' : ''}
+          </div>
+          <table class="answers-table">
+            <tbody>
+              ${qData.answers.map((ans, i) => `
+                <tr>
+                  <td class="answer" id="ans-${i}" onclick="handleAnswerClick(${i}, ${isMulti})">
+                    ${String.fromCharCode(97 + i)}) ${ans}
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+
+      renderControls(isMulti);
+    }
+
+    function renderControls(isMulti) {
+      navDiv.innerHTML = '';
+      
+      if (isMulti) {
+        // Multi choice buttons
+        const btnCheck = document.createElement('button');
+        btnCheck.className = 'btn btn-check';
+        btnCheck.textContent = 'Verifică';
+        btnCheck.id = 'btn-check-multi';
+        btnCheck.onclick = checkMultiAnswer;
+        
+        const btnReset = document.createElement('button');
+        btnReset.className = 'btn btn-reset';
+        btnReset.textContent = 'Reset';
+        btnReset.onclick = resetMultiSelection;
+
+        navDiv.appendChild(btnReset);
+        navDiv.appendChild(btnCheck);
+      } 
+      
+      // Next/Finish Button (hidden initially for single choice until selection)
+      const btnNext = document.createElement('button');
+      btnNext.className = 'btn btn-check';
+      btnNext.id = 'btn-next';
+      btnNext.style.display = isMulti ? 'none' : 'none'; // logic specific
+      
+      const isLast = questionIndexInSubtest === subtestSizes[currentSubtest] - 1;
+      btnNext.textContent = isLast ? 'Finalizează Subtest' : 'Următoarea';
+      btnNext.onclick = nextQuestion;
+      
+      navDiv.appendChild(btnNext);
+    }
+
+    // --- LOGIC SINGLE CHOICE ---
+    function handleAnswerClick(ansIdx, isMulti) {
+      const qData = questions[currentQuestionIndex];
+      
+      if (isMulti) {
+        // Toggle selection logic handled in checkMultiAnswer context, just visual here
+        // But we need to check if already validated
+        const btnCheck = document.getElementById('btn-check-multi');
+        if (btnCheck.disabled) return; // already checked
+
+        const el = document.getElementById(`ans-${ansIdx}`);
+        el.classList.toggle('selected');
+        return;
+      }
+
+      // Single Choice Logic
+      // Check if already answered
+      if (userAnswers[questionIndexInSubtest] !== null) return;
+
+      const correct = qData.correctIndex;
+      const isCorrect = (ansIdx === correct);
+      
+      // Mark selected
+      const selectedEl = document.getElementById(`ans-${ansIdx}`);
+      if (isCorrect) {
+        selectedEl.classList.add('correct');
+        score++;
+      } else {
+        selectedEl.classList.add('incorrect');
+        // Show correct
+        document.getElementById(`ans-${correct}`).classList.add('correct');
+      }
+
+      userAnswers[questionIndexInSubtest] = ansIdx;
+      
+      // Show Next Button
+      const btnNext = document.getElementById('btn-next');
+      btnNext.style.display = 'block';
+    }
+
+    // --- LOGIC MULTI CHOICE ---
+    function resetMultiSelection() {
+      const btnCheck = document.getElementById('btn-check-multi');
+      if (btnCheck.disabled) return; // cannot reset after check
+      
+      const options = document.querySelectorAll('.answer');
+      options.forEach(opt => opt.classList.remove('selected'));
+    }
+
+    function checkMultiAnswer() {
+      const qData = questions[currentQuestionIndex];
+      const correctIndices = qData.correctIndex; // array
+      
+      const options = document.querySelectorAll('.answer');
+      let selectedIndices = [];
+      
+      options.forEach((opt, idx) => {
+        if (opt.classList.contains('selected')) {
+          selectedIndices.push(idx);
+        }
+      });
+
+      if (selectedIndices.length === 0) return; // No selection
+
+      // Validate
+      // Compare arrays
+      selectedIndices.sort();
+      correctIndices.sort();
+      
+      const isCorrect = JSON.stringify(selectedIndices) === JSON.stringify(correctIndices);
+      
+      if (isCorrect) {
+        score++;
+        selectedIndices.forEach(idx => {
+          document.getElementById(`ans-${idx}`).classList.remove('selected');
+          document.getElementById(`ans-${idx}`).classList.add('correct');
+        });
+      } else {
+        selectedIndices.forEach(idx => {
+          document.getElementById(`ans-${idx}`).classList.remove('selected');
+          document.getElementById(`ans-${idx}`).classList.add('incorrect');
+        });
+        // Highlight missed correct answers
+        correctIndices.forEach(idx => {
+          document.getElementById(`ans-${idx}`).classList.add('correct');
+        });
+      }
+      
+      // Disable Check/Reset, Show Next
+      document.getElementById('btn-check-multi').disabled = true;
+      document.getElementById('btn-check-multi').style.display = 'none';
+      
+      userAnswers[questionIndexInSubtest] = selectedIndices;
+      
+      const btnNext = document.getElementById('btn-next');
+      btnNext.style.display = 'block';
+    }
+
+    function nextQuestion() {
+      questionIndexInSubtest++;
+      currentQuestionIndex++;
+      
+      if (questionIndexInSubtest < subtestSizes[currentSubtest]) {
+        loadQuestion();
+      } else {
+        showSubtestSummary();
+      }
+    }
+
+    function showSubtestSummary() {
+      quizMain.style.display = 'none';
+      navDiv.style.display = 'none';
+      
+      // Save Score
+      subtestScores[currentSubtest] = score;
+      const total = subtestSizes[currentSubtest];
+      
+      finishContainer.innerHTML = `
+        <div class="question-container" style="text-align:center;">
+          <h2>Subtest Finalizat!</h2>
+          <p style="font-size:2rem; font-weight:700; color:var(--clr-accent);">
+            ${score} / ${total}
+          </p>
+          <div style="margin-top:2rem;">
+            <button class="btn btn-reset" onclick="retrySubtest()">Refă Subtest</button>
+            <button class="btn btn-check" onclick="renderSelection()">Meniu Principal</button>
+          </div>
+        </div>
+      `;
+      floatingStep.textContent = "Rezumat Subtest";
+    }
+
+    function retrySubtest() {
+      startSubtest(currentSubtest);
+    }
+
+    // Start App
+    init();
+
+  </script>
+</body>
+</html>

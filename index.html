@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Quizescu — Examen SIEB (Corectat)</title>
+  <title>Quizescu — Examen SIEB Complet</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"/>
   <style>
     :root {
@@ -107,7 +107,6 @@
     .btn-check { background: var(--clr-accent); color: #fff; }
     .btn-check:disabled { background: #a0c3ff; cursor: not-allowed; }
     .btn-reset { background: #fff; color: #666; border: 2px solid #ddd; }
-    .btn-finish { background: var(--clr-success); color: #fff; margin-top: 1rem; }
 
     #navigation { width: 100%; max-width: 800px; padding: 0 1rem; margin-bottom: 2rem; }
     #finish-container { width: 100%; max-width: 800px; padding: 1rem; text-align: center; }
@@ -116,7 +115,7 @@
 <body>
 
   <div id="floating-step">Selectează un subtest</div>
-  <header><h1>🎯 Quizescu: SIEB</h1></header>
+  <header><h1>🎯 Quizescu: Examen SIEB</h1></header>
 
   <div id="selection"></div>
   <main id="quiz" style="display:none;"></main>
@@ -124,222 +123,113 @@
   <div id="finish-container"></div>
 
   <script>
-    // Întrebări actualizate conform cerinței
     const questions = [
-      {
-        question: "Un CRM reprezintă:",
-        answers: [
-          "o strategie de afacere ce selectează și administrează cele mai importante relații cu clienți",
-          "o soluție bazată pe tehnologii Internet pentru procurarea de bunuri și servicii",
-          "Monitorizarea vânzărilor și produselor rămase disponibile în stoc",
-          "o strategie de piață prin care producătorul își selectează clienții spre care țintește",
-          "Achiziția bunurilor și serviciilor pe măsură ce este nevoie de ele"
-        ],
-        correctIndex: 0
-      },
-      {
-        question: "Faza a 3-a din evoluția sistemelor ERP este reprezentată de :",
-        answers: [
-          "Manufacturing Resource Planning (MRP II)",
-          "Manufacturing Requirements Planning (MRP)",
-          "Capacity Requirements Planning",
-          "Enterprise Resource Planning III (ERP III)",
-          "Material Requirements Planning (MRP)"
-        ],
-        correctIndex: 0
-      },
-      {
-        question: "Ce schimbări au influențat sistemele ERP pentru a putea fi achiziționate și de către companii mai mici?",
-        answers: [
-          "scăderea complexității acestora",
-          "accelerarea ciclului de inovație-producție-demodat",
-          "îmbunătățirea lunară a tehnicii de calcul și creșterea prețurilor",
-          "îmbunătățirea continuă a tehnicii de calcul și scăderea prețurilor",
-          "creșterea numărului de module pe care este structurat un ERP"
-        ],
-        correctIndex: 3
-      },
-      {
-        question: "Acronimul DMZ provine de la ?",
-        answers: [
-          "Demilitarized Zone",
-          "Dual Model Zone",
-          "Dual Mode Zone",
-          "Demystified Zone",
-          "DeMined Zone"
-        ],
-        correctIndex: 0
-      },
-      {
-        question: "Faza a doua din evoluția sistemelor ERP se numește:",
-        answers: [
-          "Management Requirements Planning",
-          "Capacity Requirements Planning",
-          "Manufacturing Resource Planning",
-          "Material Requirements Planning",
-          "Enterprise Relocation Planning"
-        ],
-        correctIndex: 1
-      },
-      {
-        question: "Care sunt cele 3 direcții principale de administrare a lanțului de aprovizionare (SCM)?",
-        answers: [
-          "fluxul economico-financiar, fluxul monetar, fluxul produsului",
-          "fluxul produsului, fluxul clientului, fluxul de achiziție",
-          "fluxul informațional, analiza financiară, livrarea produsului",
-          "analiza financiară, analiza produsului, analiza informațională",
-          "fluxul produsului, fluxul informațional, fluxul financiar"
-        ],
-        correctIndex: 4
-      },
-      {
-        question: "Aplicația CRM are în centrul atenției:",
-        answers: [
-          "Produsul",
-          "Angajatul",
-          "Producătorul",
-          "Compania",
-          "Clientul"
-        ],
-        correctIndex: 4
-      },
-      {
-        question: "Utilitatea unui CRM analitic este dată de:",
-        answers: [
-          "îmbunătățirea relațiilor cu clienții",
-          "Creșterea vânzărilor",
-          "Managementul datelor clienților",
-          "Analiza asupra furnizorilor și clienților (vânzări, plăți, termene contractuale)",
-          "Managementul datelor furnizorilor"
-        ],
-        correctIndex: 3
-      },
-      {
-        question: "Ce aspect NU caracterizează ERP?",
-        answers: [
-          "oferirea bazei unui comerț electronic eficient",
-          "crearea unei legături atât cu furnizorii, cât și cu clienții într-un lanț complet furnizor-client",
-          "dezvoltarea unui proces de afacere pentru luarea deciziilor",
-          "imposibilitatea integrării funcționale multiple între departamente",
-          "oferirea unei posibilități de lucru la înalte nivele de servicii pentru consumatori, productivitate, simultan cu reducerea costurilor"
-        ],
-        correctIndex: 3
-      },
-      {
-        question: "Licitația tăcută (silent auction) presupune că:",
-        answers: [
-          "licitațiile se depun în plic închis simultan, astfel încât nici unul dintre ofertanți nu știe de oferta celuilalt",
-          "licitatorii își scriu prețurile oferite pe bucăți de hârtie, după ce articolele sunt afișate, putând cunoaște sau nu prețurile propuse de către ceilalți",
-          "participanții licitează în mod direct și deschis între ei, finalizarea licitației mutându-se face atunci când este atins fie un preț prestabilit, fie ultimul preț oferit înainte de expirarea licitației",
-          "se pleacă de la un preț maxim cerut de vânzător, care poate fi coborât până când un cumpărător acceptă prețul",
-          "prețul plătit nu este cel propus de câștigător, ci al doilea preț ca valoare"
-        ],
-        correctIndex: 1
-      },
-      {
-        question: "Care nu este scopul departamentului Customer Intelligence într-o companie ?",
-        answers: [
-          "încadrare clienților în profile și segmente",
-          "integrarea datelor despre clienți",
-          "analiza comportamentului clienților",
-          "recunoașterea și adresarea corectă a nevoilor clienților",
-          "luarea de decizii strategice în companie"
-        ],
-        correctIndex: 4
-      },
-      {
-        question: "Care dintre următoarele standarde este folosit cu precădere în aplicațiile pentru e-business ?",
-        answers: [
-          "HTML",
-          "HTTP",
-          "XML",
-          "CSS",
-          "FTP"
-        ],
-        correctIndex: 2
-      },
-      {
-        question: "Ce cerință a aplicațiilor e-business are rolul de a asigura portabilitatea aplicațiilor?",
-        answers: [
-          "Standardizarea",
-          "Disponibilitatea",
-          "Scalabilitatea",
-          "Ușurința în administrare",
-          "Securitatea"
-        ],
-        correctIndex: 0
-      },
-      {
-        question: "Care dintre următorii factori este cel mai puțin important în contextul CRM-ului mobil?",
-        answers: [
-          "Oferirea unei bune securizări",
-          "Funcționalitatea Off-line",
-          "Ușurința în exploatare",
-          "Asigurarea informației corecte în timp real",
-          "Asigurarea de standarde deschise",
-          "Design competitiv al aplicației"
-        ],
-        correctIndex: 5
-      },
-      {
-        question: "Printre standardele folosite în aplicațiile de e-business întâlnim (selectați două):",
-        answers: [
-          "XML",
-          "OSI",
-          "ERP",
-          "IEEE",
-          "EDI"
-        ],
-        correctIndex: [0, 4]
-      },
-      {
-        question: "Care dintre următoarele afirmații NU este adevărată? SCM îi permite unei organizații să achiziționeze materii prime/produse/servicii:",
-        answers: [
-          "în cantități impuse de furnizor",
-          "la momentul oportun",
-          "în cantitatea corespunzătoare",
-          "în mod eficient",
-          "la costuri acceptabile"
-        ],
-        correctIndex: 0
-      },
-      {
-        question: "Ce presupune modelul de livrare cloud PaaS?",
-        answers: [
-          "livrarea de AaaS, probabil versiunea de cloud computing cu care este obișnuită să lucreze majoritatea oamenilor în fiecare zi",
-          "include mediul (baza de date, runtime, server web etc.) în care utilizatorii își pot construi, rula și compila aplicațiile fără să-și facă griji cu privire la infrastructura de bază",
-          "nu se pot gestiona datele și resursele aplicației",
-          "orice tip de produs intern",
-          "blocuri fundamentale de calcul ce pot fi închiriate: servere fizice sau virtuale, metode de stocare, rețele"
-        ],
-        correctIndex: 1
-      },
-      {
-        question: "Care este unul dintre scopurile E-Procurement-ului?",
-        answers: [
-          "accesul rapid la informații",
-          "maximizarea achizițiilor făcute de la vânzători",
-          "îmbunătățirea procesului de plată",
-          "asigurarea livrării la timp, aproape mereu",
-          "creșterea prețurilor de achiziție"
-        ],
-        correctIndex: 2
-      },
-      {
-        question: "Care dintre următoarele acronime reprezintă un standard de integrare a aplicațiilor de e-procurement ?",
-        answers: [
-          "SMTP",
-          "XBBL",
-          "ePXML",
-          "XBRL",
-          "XRL"
-        ],
-        correctIndex: 3
-      }
+      // --- SUBTEST 1 (19 Intrebari initiale) ---
+      { question: "Un CRM reprezintă:", answers: ["o strategie de afacere ce selectează și administrează cele mai importante relații cu clienți", "o soluție bazată pe tehnologii Internet pentru procurarea de bunuri și servicii", "Monitorizarea vânzărilor și produselor rămase disponibile în stoc", "o strategie de piață prin care producătorul își selectează clienții spre care țintește", "Achiziția bunurilor și serviciilor pe măsură ce este nevoie de ele"], correctIndex: 0 },
+      { question: "Faza a 3-a din evoluția sistemelor ERP este reprezentată de :", answers: ["Manufacturing Resource Planning (MRP II)", "Manufacturing Requirements Planning (MRP)", "Capacity Requirements Planning", "Enterprise Resource Planning III (ERP III)", "Material Requirements Planning (MRP)"], correctIndex: 0 },
+      { question: "Ce schimbări au influențat sistemele ERP pentru a putea fi achiziționate și de către companii mai mici?", answers: ["scăderea complexității acestora", "accelerarea ciclului de inovație-producție-demodat", "îmbunătățirea lunară a tehnicii de calcul și creșterea prețurilor", "îmbunătățirea continuă a tehnicii de calcul și scăderea prețurilor", "creșterea numărului de module pe care este structurat un ERP"], correctIndex: 3 },
+      { question: "Acronimul DMZ provine de la ?", answers: ["Demilitarized Zone", "Dual Model Zone", "Dual Mode Zone", "Demystified Zone", "DeMined Zone"], correctIndex: 0 },
+      { question: "Faza a doua din evoluția sistemelor ERP se numește:", answers: ["Management Requirements Planning", "Capacity Requirements Planning", "Manufacturing Resource Planning", "Material Requirements Planning", "Enterprise Relocation Planning"], correctIndex: 1 },
+      { question: "Care sunt cele 3 direcții principale de administrare a lanțului de aprovizionare (SCM)?", answers: ["fluxul economico-financiar, fluxul monetar, fluxul produsului", "fluxul produsului, fluxul clientului, fluxul de achiziție", "fluxul informațional, analiza financiară, livrarea produsului", "analiza financiară, analiza produsului, analiza informațională", "fluxul produsului, fluxul informațional, fluxul financiar"], correctIndex: 4 },
+      { question: "Aplicația CRM are în centrul atenției:", answers: ["Produsul", "Angajatul", "Producătorul", "Compania", "Clientul"], correctIndex: 4 },
+      { question: "Utilitatea unui CRM analitic este dată de:", answers: ["îmbunătățirea relațiilor cu clienții", "Creșterea vânzărilor", "Managementul datelor clienților", "Analiza asupra furnizorilor și clienților (vânzări, plăți, termene contractuale)", "Managementul datelor furnizorilor"], correctIndex: 3 },
+      { question: "Ce aspect NU caracterizează ERP?", answers: ["oferirea bazei unui comerț electronic eficient", "crearea unei legături atât cu furnizorii, cât și cu clienții într-un lanț complet furnizor-client", "dezvoltarea unui proces de afacere pentru luarea deciziilor", "imposibilitatea integrării funcționale multiple între departamente", "oferirea unei posibilități de lucru la înalte nivele de servicii pentru consumatori, productivitate, simultan cu reducerea costurilor"], correctIndex: 3 },
+      { question: "Licitația tăcută (silent auction) presupune că:", answers: ["licitațiile se depun în plic închis simultan, astfel încât nici unul dintre ofertanți nu știe de oferta celuilalt", "licitatorii își scriu prețurile oferite pe bucăți de hârtie, după ce articolele sunt afișate, putând cunoaște sau nu prețurile propuse de către ceilalți", "participanții licitează în mod direct și deschis între ei, finalizarea licitației mutându-se face atunci când este atins fie un preț prestabilit, fie ultimul preț oferit înainte de expirarea licitației", "se pleacă de la un preț maxim cerut de vânzător, care poate fi coborât până când un cumpărător acceptă prețul", "prețul plătit nu este cel propus de câștigător, ci al doilea preț ca valoare"], correctIndex: 1 },
+      { question: "Care nu este scopul departamentului Customer Intelligence într-o companie ?", answers: ["încadrare clienților în profile și segmente", "integrarea datelor despre clienți", "analiza comportamentului clienților", "recunoașterea și adresarea corectă a nevoilor clienților", "luarea de decizii strategice în companie"], correctIndex: 4 },
+      { question: "Care dintre următoarele standarde este folosit cu precădere în aplicațiile pentru e-business ?", answers: ["HTML", "HTTP", "XML", "CSS", "FTP"], correctIndex: 2 },
+      { question: "Ce cerință a aplicațiilor e-business are rolul de a asigura portabilitatea aplicațiilor?", answers: ["Standardizarea", "Disponibilitatea", "Scalabilitatea", "Ușurința în administrare", "Securitatea"], correctIndex: 0 },
+      { question: "Care dintre următorii factori este cel mai puțin important în contextul CRM-ului mobil?", answers: ["Oferirea unei bune securizări", "Funcționalitatea Off-line", "Ușurința în exploatare", "Asigurarea informației corecte în timp real", "Asigurarea de standarde deschise", "Design competitiv al aplicației"], correctIndex: 5 },
+      { question: "Printre standardele folosite în aplicațiile de e-business întâlnim (selectați două):", answers: ["XML", "OSI", "ERP", "IEEE", "EDI"], correctIndex: [0, 4] },
+      { question: "Care dintre următoarele afirmații NU este adevărată? SCM îi permite unei organizații să achiziționeze materii prime/produse/servicii:", answers: ["în cantități impuse de furnizor", "la momentul oportun", "în cantitatea corespunzătoare", "în mod eficient", "la costuri acceptabile"], correctIndex: 0 },
+      { question: "Ce presupune modelul de livrare cloud PaaS?", answers: ["livrarea de AaaS, probabil versiunea de cloud computing cu care este obișnuită să lucreze majoritatea oamenilor în fiecare zi", "include mediul (baza de date, runtime, server web etc.) în care utilizatorii își pot construi, rula și compila aplicațiile fără să-și facă griji cu privire la infrastructura de bază", "nu se pot gestiona datele și resursele aplicației", "orice tip de produs intern", "blocuri fundamentale de calcul ce pot fi închiriate: servere fizice sau virtuale, metode de stocare, rețele"], correctIndex: 1 },
+      { question: "Care este unul dintre scopurile E-Procurement-ului?", answers: ["accesul rapid la informații", "maximizarea achizițiilor făcute de la vânzători", "îmbunătățirea procesului de plată", "asigurarea livrării la timp, aproape mereu", "creșterea prețurilor de achiziție"], correctIndex: 2 },
+      { question: "Care dintre următoarele acronime reprezintă un standard de integrare a aplicațiilor de e-procurement ?", answers: ["SMTP", "XBBL", "ePXML", "XBRL", "XRL"], correctIndex: 3 },
+
+      // --- NOILE INTREBARI (Total 81 noi) ---
+      { question: "Ce aspect NU caracterizeaza ERP?", answers: ["crearea unei legaturi atat cu furnizorii, cat si cu clientii intr-un lant complet furnizor-client", "imposibilitatea integrarii functionale multiple intre departamente", "dezvoltarea unui proces de afacere pentru luarea deciziilor", "oferirea unei posibilitati de lucru la inalte nivele de servicii pentru consumatori, productivitate, simultan cu reducerea costurilor", "oferirea bazei unui comert electronic eficient"], correctIndex: 1 },
+      { question: "Care dintre urmatorii NU este un producator de sisteme ERP?", answers: ["SalesForce", "Microsoft Dynamics NAV, 365", "Siebel", "Oracle", "SAP"], correctIndex: 2 },
+      { question: "Care este unul dintre scopurile E-Procurement-ului?", answers: ["cresterea preturilor de achizitie", "maximizarea achizitiilor facute de la vanzatori", "accesul rapid la informatii", "asigurarea livrarii la timp, aproape mereu", "imbunatatirea procesului de plata"], correctIndex: 4 },
+      { question: "Care este cel mai important producator ERP din lume?", answers: ["Kronos", "The Sage Group", "SAP", "Oracle Applications"], correctIndex: 2 },
+      { question: "Care dintre urmatoarele afirmatii NU este adevarata?", answers: ["ERP este o colectie de aplicatii menite sa automatizeze activitatea de business", "ERP NU este un mediu interactiv de a administra o companie", "ERP este o colectie de aplicatii menite sa ajute la administrarea eficienta a procesului de productie", "ERP este o colectie de aplicatii menite sa ajute la administrarea eficienta a comenzilor clientilor", "ERP este o colectie de aplicatii menite sa ajute la administrarea eficienta a planificarii de productie"], correctIndex: 1 },
+      { question: "Conform clasificarii Oliver Wright, ce reprezinta clasa B de sisteme ERP?", answers: ["un suport pentru managementul de varf, utilizat de managementul de mijloc pentru a obtine imbunatatiri cuantificabile ale calitatii", "un ERP utilizat eficient in intreaga companie ce genereaza imbunatatiri semnificative in serviciile pentru clienti, productivitate si costuri", "principala aplicatie o reprezinta metodele mai bune de management al comenzilor si al inventarului", "informatii incomplete sau inexacte si putin intelese de utilizatori, ce ofera putin suport in derularea afacerii"], correctIndex: 0 },
+      { question: "Care dintre urmatoarele variante NU reprezinta o functionalitate a managementului sistemelor?", answers: ["planificarea capacitatilor", "controlul modificarilor", "posibilitatile de testare", "localizarea serviciilor", "managementul entitatilor"], correctIndex: 3 },
+      { question: "Care sunt functionalitatile infrastructurii de retea?", answers: ["localizarea serviciilor, autentificarea utilizatorilor si tehnologii pentru scalabilitate", "localizarea serviciilor si autentificarea utilizatorilor", "autentificarea utilizatorilor si tehnologii pentru scalabilitate", "localizarea serviciilor si tehnologii pentru scalabilitate"], correctIndex: 0 },
+      { question: "Care dintre urmatoarele variante este un tip de e-business?", answers: ["B2C", "D2D", "E2E", "C2B", "C2E"], correctIndex: 3 },
+      { question: "Care din urmatoarele variante se numara printre factorii importanti pentru CRM-ul mobil?", answers: ["usurinta in utilizare trebuie sa fie in prim-plan", "informatia in timp real nu este critica", "un CRM mobil trebuie sa functioneze exclusiv offline", "un CRM mobil si varianta Desktop trebuie sa fie identice", "CRM-ul mobil nu constituie un avantaj"], correctIndex: 0 },
+      { question: "In ce an a fost folosit prima data termenul de “e-business”?", answers: ["1989", "1997", "1999"], correctIndex: 1 },
+      { question: "Ce schimbari i-au fost aduse sistemului ERP pentru a putea fi achizitionat si de companii mai mici?", answers: ["scaderea complexitatii sistemului", "cresterea numarului de module pe care este structurat sistemul", "imbunatatirea continua a tehnicii de calcul si scaderea preturilor", "imbunatatirea lunara a tehnicii de calcul si cresterea preturilor", "accelerarea ciclului de inovatie-productie-demodat"], correctIndex: 2 },
+      { question: "La ce se refera acronimul ERP?", answers: ["Effective Resource Planning", "Enterprise Resource Planning", "External Resource Planning"], correctIndex: 1 },
+      { question: "Care dintre urmatoarele variante NU reprezinta un tip de comert electronic?", answers: ["B2B (business-to-business)", "C2B (consumer-to-business)", "G2B (government-to-business)", "G2G (government-to-government)"], correctIndex: 3 },
+      { question: "Care este arhitectura dominanta intr-un sistem ERP?", answers: ["microservices", "multi-tier", "component-based", "client-server"], correctIndex: 3 },
+      { question: "Printre functionalitatile oferite de infrastructura de retea se numara:", answers: ["planificarea capacitatilor", "managementul entitatilor", "controlul modificarilor", "localizarea serviciilor"], correctIndex: 3 },
+      { question: "In ce consta arhitectura unui Framework pentru e-business?", answers: ["servere aplicatii, clienti, AIS (Application Integration Software)", "ORM, JSF", "Java", "module pentru interconectare"], correctIndex: 0 },
+      { question: "In prezent, arhitectura folosita pentru aplicatiile ERP este:", answers: ["client/server", "cloud", "mainframe"], correctIndex: 1 },
+      { question: "Ce schimbari i-au fost aduse sistemului ERP pentru a putea fi achizitionat si de companii mai mici?", answers: ["scaderea complexitatii sistemului", "cresterea numarului de module pe care este structurat sistemul", "imbunatatirea continua a tehnicii de calcul si scaderea preturilor", "imbunatatirea lunara a tehnicii de calcul si cresterea preturilor", "accelerarea ciclului de inovatie-productie-demodat"], correctIndex: 2 },
+      { question: "Care dintre componentele arhitecturii “Framework” ofera servicii de conectivitate in retea si servicii de securitate?", answers: ["clientii", "infrastructura de retea", "serverele de aplicatii ale nivelului de mijloc", "software-ul de integrare a aplicatiilor"], correctIndex: 1 },
+      { question: "Care dintre urmatoarele face parte din ciclul de viata al relatiei cu clientii?", answers: ["marketing", "vanzari", "e-commerce", "servicii", "toate raspunsurile"], correctIndex: 4 },
+      { question: "Un avantaj al CRM mobil este:", answers: ["creste flexibilitatea productiei", "reduce costurile de achizitii pentru cumparatori", "ofera posibilitatea de a vedea starea unei comenzi (de exemplu, de a vedea daca un anumit produs exista in depozit)", "permite existenta cataloagelor online cu preturi diferite pentru diversi clienti"], correctIndex: 2 },
+      { question: "Software-ul de integrare a aplicatiilor ofera:", answers: ["servicii de baza de prezentare a structurii generale din care fac parte aplicatiile, bazele de date, serviciile de tranzactii, serviciile de email, colaborare, mesaje etc.", "acces la datele si aplicatiile existente", "servicii precum conectivitate in retea, servicii directory si de securitate accesate prin intermediul interfetelor si protocoalelor standard", "blocuri functionale deja construite si testate pentru a facilita crearea de solutii de e-business", "suport, de la browsere Web standard la echipamente mai sofisticate (PDA-uri, smart-card-uri, telefoane mobile) de ultima generatie"], correctIndex: 1 },
+      { question: "Care sunt functionalitatile managementului sistemelor?", answers: ["planificarea capacitatilor, managementul entitatilor, controlul modificarilor", "planificarea capacitatilor, controlul modificarilor, managementul entitatilor, posibilitati de testare", "controlul modificarilor, managementul entitatilor, posibilitati de testare", "planificarea capacitatilor, managementul entitatilor, posibilitati de testare"], correctIndex: 1 },
+      { question: "Prin ce se realizeaza traducerea unui HLL?", answers: ["test", "compilator", "metoda HLL by default", "incapsulare", "polimorfism"], correctIndex: 1 },
+      { question: "Un software ERP cuprinde urmatoarele functionalitati:", answers: ["integrarea si centralizarea datelor despre client, managementul procesului de vanzare, managementul task-urilor, raportarea activitatilor oamenilor de vanzari, analiza rapida a datelor din rapoarte, coordonarea echipelor etc.", "planificarea si urmarirea productiei, evidenta stocurilor, a furnizorilor, a platilor si a incasarilor, optimizarea activitatilor de vanzare, de distributie si de facturare, managementul echipei, calculul salariilor si managementul informatiilor referitoare la personal, evidenta contabila etc.", "coordonarea strategiei, furnizorii, productivitatea activitatii, livrarea si logistica acesteia, sistemul de returnare etc.", "baza de date ce include produsele, angajatii si furnizorii sau partenerii", "evidenta stocurilor, a furnizorilor, a platilor si a incasarilor, optimizarea activitatilor de vanzare, managementul procesului de vanzare, coordonarea echipelor etc."], correctIndex: 1 },
+      { question: "Care este cel mai bun producator de sisteme ERP de afaceri in prezent?", answers: ["Oracle", "Sage Group", "SAP"], correctIndex: 2 },
+      { question: "Care sunt 3 dintre influentele majore ale sistemului CRM?", answers: ["accelerarea ciclului inovatie, razgandirea frecventa a clientului, incetinirea ciclului de productie", "concentrarea atentiei catre client, accelerarea ciclului inovatie-productie-demodat si marirea numarului de clienti utilizatori de Internet", "concentrarea atentiei catre angajati, accelerarea ciclului de dezvoltare al produsului si marirea numarului de clienti utilizatori de Internet", "ERP nu este totul, concentrarea atentiei catre angajati si reducerea numarului de clienti utilizatori de Internet", "eliminarea ciclului de inovatie-productie-demodat"], correctIndex: 1 },
+      { question: "Care din urmatoarele este un software CRM open-source?", answers: ["SalesForce", "Sugar CRM", "HubSpot CRM"], correctIndex: 1 },
+      { question: "NU constituie o componenta principala a unei platforme tehnologice de e-procurement:", answers: ["solutiile “buy-side”", "solutiile de schimb si licitatii", "solutiile “sell-side”", "solutiile de optimizare a stocurilor"], correctIndex: 3 },
+      { question: "Care este cel mai mare producator de solutii software de tip ERP?", answers: ["IBM", "SAP", "Oracle", "Kronos"], correctIndex: 1 },
+      { question: "Care dintre urmatoarele NU reprezinta un tip principal de model B2B?", answers: ["pietele de e-market de tip “buy-sell”", "pietele de e-market de tip “sell-side”", "pietele de e-market de tip “buy-side”", "vanzarea prin licitatii"], correctIndex: 0 },
+      { question: "Ce inseamna CRM?", answers: ["Client Relationship Management", "Customer Relationship Manager", "Customer Relationship Management", "Customer Relationship Marketing"], correctIndex: 2 },
+      { question: "In centrul CRM se afla:", answers: ["solutia tehnologica", "clientul", "profitul"], correctIndex: 1 },
+      { question: "Ce trebuie sa asigure, in primul rand, aplicatiile de CRM mobile?", answers: ["o interfata user-friendly", "securitate “enterprise”", "accesul rapid la informatii", "informatii de contact ale clientilor", "alerte si sincronizari programate"], correctIndex: 1 },
+      { question: "Care dintre urmatoarele NU face parte din ciclul de viata al relatiei cu clientii?", answers: ["e-commerce", "marketing", "aprovizionare", "servicii de suport"], correctIndex: 2 },
+      { question: "Care dintre urmatoarele sunt integrari e-business?", answers: ["CRM", "ERP", "SCM", "e-procurement", "toate raspunsurile"], correctIndex: 4 },
+      { question: "Un producator de sisteme ERP din Romania este:", answers: ["Sage Group", "SalesForce", "Global Technologies", "SIVAPPS"], correctIndex: 3 },
+      { question: "Licitatia tacuta (silent auction) presupune ca:", answers: ["licitatorii isi scriu preturile oferite pe bucati de hartie, dupa ce articolele sunt afisate, putand cunoaste sau nu preturile propuse de catre ceilalti", "licitatiile se depun in plic inchis simultan, astfel incat nici unul dintre ofertanti nu stie de oferta celuilalt", "se pleaque de la un pret maxim cerut de vanzator, care poate fi coborat pana cand un cumparator accepta pretul", "participantii liciteaza in mod direct si deschis intre ei, finalizarea licitatiei putandu-se face atunci cand este atins fie un pret prestabilit, fie ultimul pret oferit inaintea de expirarea licitatiei", "pretul platit nu este cel propus de castigator, ci al doilea pret ca valoare"], correctIndex: 0 },
+      { question: "Care sunt componentele arhitecturii “Framework”?", answers: ["servere de aplicatii ale nivelului de mijloc, clienti carora li se ofera suport, software-ul de integrare a aplicatiilor", "servere de aplicatii ale nivelului de mijloc, clienti carora li se ofera suport, software-ul de integrare a aplicatiilor si infrastructura de retea", "clienti carora li se ofera suport, software-ul de integrare a aplicatiilor si infrastructura de retea", "servere de aplicatii ale nivelului de mijloc, clienti carora li se ofera suport si software-ul de integrare a aplicatiilor"], correctIndex: 1 },
+      { question: "Care este principala functie a unui procesor?", answers: ["executa testele", "realizeaza compilarea", "este specific operatiunii de debugging", "stocheaza date neutilizate", "executa instructiuni-masina"], correctIndex: 4 },
+      { question: "Tipurile de e-commerce sunt:", answers: ["B2B, B2C, C2C si C2B", "B2B, B2C, C2C, C2B, business-to-government si business-to-employee", "B2B, B2C, C2C, C2B, business-to-government, business-to-employee, SCM, ERP si CRM", "SCM, ERP si CRM", "B2B, B2C, C2C, C2B, SCM, ERP si CRM"], correctIndex: 1 },
+      { question: "SCM are rolul de a:", answers: ["permite achizitionarea produselor si serviciilor necesare la momentul oportun si la costuri acceptabile", "ajuta compania sa administreze si sa analizeze procesele legate de productie", "administra eficient relatiile cu clientii intreprinderii"], correctIndex: 0 },
+      { question: "Care este unul dintre scopurile e-procurement-ului?", answers: ["cresterea preturilor de achizitie", "maximizarea achizitiilor facute de la vanzatori", "accesul rapid la informatii", "asigurarea livrarii la timp, aproape mereu", "imbunatatirea procesului de plata"], correctIndex: 4 },
+      { question: "Cum se numeste tipul de afacere in care consumatorii isi creeaza propria cerere pentru bunuri si servicii?", answers: ["B2C", "B2B", "C2B"], correctIndex: 2 },
+      { question: "Care dintre urmatoarele variante se pot regasi printre scopurile E-Procurement-ului?", answers: ["cresterea productivitatii prin activitatea agentilor", "imbunatatirea managementului si a fluxului de informatii", "imbunatatirea procesului de plata (pentru vanzatori)", "minimizarea achizitiilor facute de la vanzatori cu care nu exista un contract in prealabil", "toate variantele"], correctIndex: 4 },
+      { question: "Care este principiul care sta la baza Framework-ului?", answers: ["Se bazeaza pe “open standards” sau “de facto standards”", "usurinta utilizarii", "poate integra orice tip de tehnologie", "este gratis"], correctIndex: 0 },
+      { question: "“Back-end”-ul de internet este protejat de:", answers: ["al doilea firewall", "zona “demilitarizata” (DMZ - DeMilitarized Zone)", "primul firewall"], correctIndex: 1 },
+      { question: "Ce reprezinta CRM?", answers: ["o strategie de afacere menita sa selecteze si sa administreze cele mai importante relatii cu clientii", "o strategie de afacere care are in centrul atentiei furnizorul de servicii", "un proces care conduce la un management eficient al relatiilor cu clientii", "un sistem care porneste cu o strategie de afacere, ce nu conduce la schimbari in procesele organizationale si de munca", "o strategie de afacere in cadrul careia Tehnologia Informatiei constituie punctul de plecare"], correctIndex: 0 },
+      { question: "Modelul de business unde consumatorii isi creeaza propria valoare si cerere pentru bunuri si servicii este:", answers: ["B2C", "B2B", "C2B", "C2C"], correctIndex: 2 },
+      { question: "Care sunt cele 3 directii principale de administrare a lantului de aprovizionare (SCM)?", answers: ["fluxul produsului, fluxul clientului, fluxul de achizitie", "fluxul informational, analiza financiara, livrarea produsului", "analiza financiara, analiza produsului, analiza informationala", "fluxul produsului, fluxul informational, fluxul financiar", "fluxul economico-financiar, fluxul monetar, fluxul produsului"], correctIndex: 3 },
+      { question: "Care dintre urmatoarele filtreaza traficul din punctul de vedere al protocolului utilizat?", answers: ["DMZ", "al doilea firewall", "traficul nu este filtrat din acest punct de vedere", "primul firewall"], correctIndex: 3 },
+      { question: "Care dintre urmatoarele afirmatii NU este adevarata? SCM ii permite unei organizatii sa achizitioneze materii prime / produse / servicii:", answers: ["la momentul oportun", "in cantitatea corespunzatoare", "in cantitati impuse de furnizor", "la costuri acceptabile", "in mod eficient"], correctIndex: 2 },
+      { question: "O solutie CRM pentru companii mici-medii este:", answers: ["J.D. Edwards", "Maximizer", "SAP", "Siebel"], correctIndex: 1 },
+      { question: "CRM (Customer Relationship Management) reprezinta:", answers: ["o aplicatie software complexa multi-modulara care integreaza procesele economice ale intreprinderii cu scopul optimizarii si cresterii eficientei acestora", "tranzactii intre companii ce au loc electronic prin intermediul Internetului, extraneturilor sau intraneturilor", "o strategie de afacere menita sa selecteze si sa administreze cele mai importante relatii cu clientii", "administrarea lantului de aprovizionare, care ii permite unei organizatii sa achizitioneze materiile prime/produsele si/sau serviciile necesare, la momentul oportun, in cantitatea corespunzatoare, la costuri acceptabile", "niciuna dintre variante nu este corecta"], correctIndex: 2 },
+      { question: "Cate influente importante are Customer Relationship Management (CRM)?", answers: ["2", "3", "4", "5"], correctIndex: 1 },
+      { question: "Care sunt principalele provocari cu care se confrunta e-business-ul?", answers: ["programele speciale de fonduri europene", "stoparea online-ului", "evolutia tehnologiilor suficient de rapid in conformitate cu dinamismul pietei", "servere insuficient de stabile", "legi impotriva dezvoltarii tehnologiei"], correctIndex: 2 },
+      { question: "Care din urmatoarele variante sunt modele de livrare?", answers: ["Software-as-a-Service, Platform-as-a-Service si Interface-as-a-Service", "CRM, SCM si ERP", "Software-as-a-Service, Platform-as-a-Service si Infrastructure-as-a-Service", "Application-as-a-Service, Platform-as-a-Service si Infrastructure-as-a-Service", "Software-as-a-Service, Database-as-a-Service si Infrastructure-as-a-Service"], correctIndex: 2 },
+      { question: "La ce se refera acronimul CRM?", answers: ["Client Relationship Management", "Customer Relationship Management", "Customer Resource Management"], correctIndex: 1 },
+      { question: "Ce trebuie sa asigure, in primul rand, aplicatiile de CRM mobile?", answers: ["o interfata user-friendly", "securitate “enterprise”", "accesul rapid la informatii", "informatii de contact ale clientilor", "alerte si sincronizari programate"], correctIndex: 1 },
+      { question: "Care din urmatoarele variante are ca scop automatizarea activitatii de business a unei intreprinderi pentru administrarea mai eficienta a proceselor de productie si comanda?", answers: ["ERP", "CRM", "SCM"], correctIndex: 0 },
+      { question: "Fluxul financiar:", answers: ["include deplasarea bunurilor de la furnizor la consumator", "implica transmiterea de plati si credite", "implica transmiterea cererilor si actualizarea starii furnizarilor de produse", "consta in termene de credit, plati si planificari de plati, plus consemnarea acestora"], correctIndex: 3 },
+      { question: "Ce elemente NU implica managementul lantului de aprovizionare in cadrul SCM?", answers: ["locatia", "productia", "stocurile", "resursa umana", "transportul"], correctIndex: 3 },
+      { question: "Ce companie a folosit pentru prima data termenul de “e-business”?", answers: ["Oracle", "IBM", "Microsoft", "Apple"], correctIndex: 1 },
+      { question: "Care sunt 3 dintre influentele majore ale sistemului CRM?", answers: ["accelerarea ciclului inovatie, razgandirea frecventa a clientului, incetinirea ciclului de productie", "concentrarea atentiei catre client, accelerarea ciclului inovatie-productie-demodat, marirea numarului de clienti utilizatori de Internet", "concentrarea atentiei catre angajati, accelerarea ciclului de dezvoltare al produsului, marirea numarului de clienti utilizatori de Internet", "ERP nu este totul, concentrarea atentiei catre angajati, reducerea numarului de clienti utilizatori de Internet", "eliminarea ciclului de inovatie-productie-demodat"], correctIndex: 1 },
+      { question: "Care dintre urmatoarele se axeaza pe planificarea resurselor in vederea administrarii mai eficiente a activitatilor?", answers: ["SCM", "CRM", "e-procurement", "ERP"], correctIndex: 3 },
+      { question: "Ce elemente sunt implicate intr-un SCM?", answers: ["locatia", "productia", "stocurile", "transportul", "toate raspunsurile"], correctIndex: 4 },
+      { question: "Modelul E-Commerce „one-to-many” rezulta in:", answers: ["utilizatorii nu necesita cont pentru a licita", "cresterea vizualizarilor de pagini", "cresterea numarului de produse afisate pe pagina", "scaderea numarului de membri"], correctIndex: 1 },
+      { question: "Fluxul informational utilizat pentru administrarea lantului de aprovizionare implica:", answers: ["deplasarea bunurilor de la furnizor la consumator", "data mining, campanii, relatii/valoare pe termen lung", "administrarea serviciilor suport post-vanzari", "termene de credit, plati si planificari de plati, plus consemnarea acestora", "transmiterea cererilor si actualizarea starii furnizarilor de produse"], correctIndex: 4 },
+      { question: "Care sunt principalele directii din cadrul lantului de aprovizionare?", answers: ["fluxul produsului si fluxul financiar", "fluxul informational si fluxul financiar", "fluxul informational si fluxul produsului", "fluxul produsului, fluxul informational si fluxul financiar"], correctIndex: 3 },
+      { question: "In proces este o instanta a unui program in executie. Alegeti varianta corecta cu privire la proces si program:", answers: ["procesul este pasiv, programul este activ", "ambele sunt active", "nu exista aceasta informatie", "procesul este activ, programul este pasiv", "ambele sunt pasive"], correctIndex: 3 },
+      { question: "Limbajele folosite pentru transferul datelor sunt XML, JSON si XSL. XSL este reprezentat de limbajele:", answers: ["SSLT, XPath, XSL-FO si XML", "XSLT, XPath si XML", "XSLT, XPath, XSL-FO si XML", "XPath, XSL-FO si XSLT", "XPath, XSL-FO, XSLT, XML si JSON"], correctIndex: 3 },
+      { question: "Care NU este o categorie a aplicatiilor de tip SCM?", answers: ["aplicatii de planificare", "aplicatii de executie", "aplicatii de contabilitate"], correctIndex: 2 },
+      { question: "Ce rol are infrastructura de retea drept componenta intr-o arhitectura “Framework”?", answers: ["ofera conectivitate in retea", "ofera acces la datele si aplicatiile existente", "asigura managementul aplicatiilor de e-business pentru componentele integrului sistem"], correctIndex: 0 },
+      { question: "Aplicatia CRM are in centrul atentiei:", answers: ["produsul", "clientul", "producatorul", "angajatul"], correctIndex: 1 },
+      { question: "Ce presupune modelul de livrare cloud PaaS?", answers: ["blocuri fundamentale de calcul ce pot fi inchiriate: servere fizice sau virtuale, metode de stocare, retele", "nu se pot gestiona datele si resursele aplicatiei", "include mediu (baza de date, runtime, server web etc.) in care utilizatorii isi pot construi, rula si compila aplicatii fara sa fie grijulii cu privire la infrastructura de baza", "livrarea de SaaS, probabil versiunea de cloud computing cu care este obisnuita sa lucreze majoritatea oamenilor in fiecare zi", "orice tip de produs intern"], correctIndex: 2 },
+      { question: "Unul dintre riscurile e-business-ului este:", answers: ["evolutia tehnologiilor suficient de rapid in conformitate cu dinamismul pietei", "gasirea si trainingul unor angajati care sa tina pasul cu permanenta evolutie din domeniu", "securitatea datelor, deoarece, in majoritatea cazurilor, clientii trebuie sa ofere informatii confidentiale in timpul tranzactiilor financiare, precum si datele de contact sau numerele credit-card-urilor", "scalarea rapida a serviciilor pentru a face fata cererii fara degradarea performantelor"], correctIndex: 2 },
+      { question: "Ce limbaje sunt folosite in transferul de date?", answers: ["XML, XSL si Java", "JSON, XSL si JavaScript", "XML, JSON si C#", "orice tip de limbaj", "XML, JSON si XSL"], correctIndex: 4 },
+      { question: "Infrastructura de retea NU ofera:", answers: ["localizarea serviciilor", "autentificarea utilizatorilor", "planificarea capacitatilor", "tehnologii pentru scalabilitate"], correctIndex: 2 }
     ];
 
-    // Configurare Subteste (19 întrebări total -> 10 + 9)
-    const subtestSizes = [10, 9];
+    // Configurare Subteste
+    // Primul subtest are 19, restul de 81 se împart în 3 (~27 fiecare)
+    const subtestSizes = [19, 27, 27, 27];
     let subtestStarts = [];
     let acc = 0;
     for (let s of subtestSizes) {
@@ -347,32 +237,26 @@
       acc += s;
     }
 
-    // State
     let currentSubtest = null;
-    let currentQuestionIndex = 0; // global index
+    let currentQuestionIndex = 0;
     let questionIndexInSubtest = 0;
     let score = 0;
     let userAnswers = [];
     let subtestScores = new Array(subtestSizes.length).fill(null);
 
-    // DOM Elements
     const selectionDiv = document.getElementById('selection');
     const quizMain = document.getElementById('quiz');
     const navDiv = document.getElementById('navigation');
     const finishContainer = document.getElementById('finish-container');
     const floatingStep = document.getElementById('floating-step');
 
-    // --- INIT ---
-    function init() {
-      renderSelection();
-    }
+    function init() { renderSelection(); }
 
     function renderSelection() {
       quizMain.style.display = 'none';
       navDiv.style.display = 'none';
       finishContainer.innerHTML = '';
       selectionDiv.innerHTML = '';
-      
       let allDone = true;
       let totalScore = 0;
       let totalMax = 0;
@@ -380,40 +264,19 @@
       subtestSizes.forEach((size, idx) => {
         const isDone = subtestScores[idx] !== null;
         if (!isDone) allDone = false;
-        
         const card = document.createElement('div');
         card.className = 'subtest-card';
-        card.innerHTML = `
-          <div>
-            <h3>Subtest ${idx + 1}</h3>
-            <p>${size} întrebări</p>
-          </div>
-          <div style="text-align:right;">
-             ${isDone 
-               ? `<span style="color:var(--clr-success); font-weight:bold;">${subtestScores[idx]}/${size}</span>` 
-               : `<span style="color:var(--clr-accent);">Start</span>`}
-          </div>
-        `;
+        card.innerHTML = `<div><h3>Subtest ${idx + 1}</h3><p>${size} întrebări</p></div>
+          <div style="text-align:right;">${isDone ? `<span style="color:var(--clr-success); font-weight:bold;">${subtestScores[idx]}/${size}</span>` : `<span style="color:var(--clr-accent);">Start</span>`}</div>`;
         card.onclick = () => startSubtest(idx);
         selectionDiv.appendChild(card);
-        
-        if (isDone) {
-          totalScore += subtestScores[idx];
-          totalMax += size;
-        }
+        if (isDone) { totalScore += subtestScores[idx]; totalMax += size; }
       });
 
       if (allDone) {
-        finishContainer.innerHTML = `
-          <div class="question-container" style="text-align:center;">
-            <h2>Felicitări! Ai completat toate subtestele.</h2>
-            <p style="font-size:1.5rem; margin:1rem 0;">Scor Total: <span style="color:var(--clr-accent);">${totalScore} / ${totalMax}</span></p>
-            <button class="btn btn-reset" onclick="location.reload()">Reîncepe Tot</button>
-          </div>
-        `;
+        finishContainer.innerHTML = `<div class="question-container"><h2>Bravo! Test completat.</h2><p style="font-size:1.5rem;">Scor Final: ${totalScore} / ${totalMax}</p><button class="btn btn-reset" onclick="location.reload()">Reset</button></div>`;
       }
-      
-      floatingStep.textContent = "Selectează un subtest";
+      floatingStep.textContent = "Alege Subtest";
     }
 
     function startSubtest(idx) {
@@ -422,217 +285,64 @@
       currentQuestionIndex = subtestStarts[idx];
       score = 0;
       userAnswers = new Array(subtestSizes[idx]).fill(null);
-      
       selectionDiv.innerHTML = '';
-      finishContainer.innerHTML = '';
       quizMain.style.display = 'block';
       navDiv.style.display = 'flex';
-      
       loadQuestion();
     }
 
     function loadQuestion() {
       const qData = questions[currentQuestionIndex];
       const isMulti = Array.isArray(qData.correctIndex);
-      
-      // Update floating step
-      floatingStep.textContent = `Subtest ${currentSubtest + 1} | Întrebarea ${questionIndexInSubtest + 1}/${subtestSizes[currentSubtest]}`;
-
-      quizMain.innerHTML = `
-        <div class="question-container">
-          <div class="question-title">
-            ${questionIndexInSubtest + 1}. ${qData.question}
-            ${isMulti ? '<span style="font-size:0.8rem; color:var(--clr-accent); display:block; margin-top:5px;">(Alegeți toate variantele corecte)</span>' : ''}
-          </div>
-          <table class="answers-table">
-            <tbody>
-              ${qData.answers.map((ans, i) => `
-                <tr>
-                  <td class="answer" id="ans-${i}" onclick="handleAnswerClick(${i}, ${isMulti})">
-                    ${String.fromCharCode(97 + i)}) ${ans}
-                  </td>
-                </tr>
-              `).join('')}
-            </tbody>
-          </table>
-        </div>
-      `;
-
+      floatingStep.textContent = `Subtest ${currentSubtest+1} | ${questionIndexInSubtest+1}/${subtestSizes[currentSubtest]}`;
+      quizMain.innerHTML = `<div class="question-container"><div class="question-title">${questionIndexInSubtest+1}. ${qData.question} ${isMulti ? '<br><small>(Multiplu)</small>':''}</div>
+        <table class="answers-table"><tbody>${qData.answers.map((ans, i) => `<tr><td class="answer" id="ans-${i}" onclick="handleAnswerClick(${i}, ${isMulti})">${String.fromCharCode(97+i)}) ${ans}</td></tr>`).join('')}</tbody></table></div>`;
       renderControls(isMulti);
     }
 
     function renderControls(isMulti) {
       navDiv.innerHTML = '';
-      
       if (isMulti) {
-        // Multi choice buttons
-        const btnCheck = document.createElement('button');
-        btnCheck.className = 'btn btn-check';
-        btnCheck.textContent = 'Verifică';
-        btnCheck.id = 'btn-check-multi';
-        btnCheck.onclick = checkMultiAnswer;
-        
-        const btnReset = document.createElement('button');
-        btnReset.className = 'btn btn-reset';
-        btnReset.textContent = 'Reset';
-        btnReset.onclick = resetMultiSelection;
-
-        navDiv.appendChild(btnReset);
-        navDiv.appendChild(btnCheck);
-      } 
-      
-      // Next/Finish Button (hidden initially for single choice until selection)
-      const btnNext = document.createElement('button');
-      btnNext.className = 'btn btn-check';
-      btnNext.id = 'btn-next';
-      btnNext.style.display = isMulti ? 'none' : 'none'; // logic specific
-      
-      const isLast = questionIndexInSubtest === subtestSizes[currentSubtest] - 1;
-      btnNext.textContent = isLast ? 'Finalizează Subtest' : 'Următoarea';
-      btnNext.onclick = nextQuestion;
-      
-      navDiv.appendChild(btnNext);
+        const bC = document.createElement('button'); bC.className='btn btn-check'; bC.textContent='Verifică'; bC.id='btn-check-multi'; bC.onclick=checkMultiAnswer;
+        const bR = document.createElement('button'); bR.className='btn btn-reset'; bR.textContent='Reset'; bR.onclick=()=>document.querySelectorAll('.answer').forEach(o=>o.classList.remove('selected'));
+        navDiv.appendChild(bR); navDiv.appendChild(bC);
+      }
+      const bN = document.createElement('button'); bN.className='btn btn-check'; bN.id='btn-next'; bN.style.display='none';
+      const isLast = questionIndexInSubtest === subtestSizes[currentSubtest]-1;
+      bN.textContent = isLast ? 'Finalizează' : 'Următoarea';
+      bN.onclick = nextQuestion;
+      navDiv.appendChild(bN);
     }
 
-    // --- LOGIC SINGLE CHOICE ---
-    function handleAnswerClick(ansIdx, isMulti) {
-      const qData = questions[currentQuestionIndex];
-      
-      if (isMulti) {
-        // Toggle selection logic handled in checkMultiAnswer context, just visual here
-        // But we need to check if already validated
-        const btnCheck = document.getElementById('btn-check-multi');
-        if (btnCheck.disabled) return; // already checked
-
-        const el = document.getElementById(`ans-${ansIdx}`);
-        el.classList.toggle('selected');
-        return;
-      }
-
-      // Single Choice Logic
-      // Check if already answered
+    function handleAnswerClick(idx, isM) {
+      if (isM) { if(!document.getElementById('btn-check-multi').disabled) document.getElementById(`ans-${idx}`).classList.toggle('selected'); return; }
       if (userAnswers[questionIndexInSubtest] !== null) return;
-
-      const correct = qData.correctIndex;
-      const isCorrect = (ansIdx === correct);
-      
-      // Mark selected
-      const selectedEl = document.getElementById(`ans-${ansIdx}`);
-      if (isCorrect) {
-        selectedEl.classList.add('correct');
-        score++;
-      } else {
-        selectedEl.classList.add('incorrect');
-        // Show correct
-        document.getElementById(`ans-${correct}`).classList.add('correct');
-      }
-
-      userAnswers[questionIndexInSubtest] = ansIdx;
-      
-      // Show Next Button
-      const btnNext = document.getElementById('btn-next');
-      btnNext.style.display = 'block';
-    }
-
-    // --- LOGIC MULTI CHOICE ---
-    function resetMultiSelection() {
-      const btnCheck = document.getElementById('btn-check-multi');
-      if (btnCheck.disabled) return; // cannot reset after check
-      
-      const options = document.querySelectorAll('.answer');
-      options.forEach(opt => opt.classList.remove('selected'));
+      const correct = questions[currentQuestionIndex].correctIndex;
+      if (idx === correct) { document.getElementById(`ans-${idx}`).classList.add('correct'); score++; } 
+      else { document.getElementById(`ans-${idx}`).classList.add('incorrect'); document.getElementById(`ans-${correct}`).classList.add('correct'); }
+      userAnswers[questionIndexInSubtest] = idx;
+      document.getElementById('btn-next').style.display = 'block';
     }
 
     function checkMultiAnswer() {
-      const qData = questions[currentQuestionIndex];
-      const correctIndices = qData.correctIndex; // array
-      
-      const options = document.querySelectorAll('.answer');
-      let selectedIndices = [];
-      
-      options.forEach((opt, idx) => {
-        if (opt.classList.contains('selected')) {
-          selectedIndices.push(idx);
-        }
-      });
-
-      if (selectedIndices.length === 0) return; // No selection
-
-      // Validate
-      // Compare arrays
-      selectedIndices.sort();
-      correctIndices.sort();
-      
-      const isCorrect = JSON.stringify(selectedIndices) === JSON.stringify(correctIndices);
-      
-      if (isCorrect) {
-        score++;
-        selectedIndices.forEach(idx => {
-          document.getElementById(`ans-${idx}`).classList.remove('selected');
-          document.getElementById(`ans-${idx}`).classList.add('correct');
-        });
-      } else {
-        selectedIndices.forEach(idx => {
-          document.getElementById(`ans-${idx}`).classList.remove('selected');
-          document.getElementById(`ans-${idx}`).classList.add('incorrect');
-        });
-        // Highlight missed correct answers
-        correctIndices.forEach(idx => {
-          document.getElementById(`ans-${idx}`).classList.add('correct');
-        });
-      }
-      
-      // Disable Check/Reset, Show Next
+      const q = questions[currentQuestionIndex];
+      const sel = []; document.querySelectorAll('.answer').forEach((el, i) => { if(el.classList.contains('selected')) sel.push(i); });
+      if(sel.length === 0) return;
+      const corr = [...q.correctIndex].sort(); sel.sort();
+      const isC = JSON.stringify(sel) === JSON.stringify(corr);
+      if(isC) { score++; sel.forEach(i=>document.getElementById(`ans-${i}`).classList.add('correct')); }
+      else { sel.forEach(i=>document.getElementById(`ans-${i}`).classList.add('incorrect')); corr.forEach(i=>document.getElementById(`ans-${i}`).classList.add('correct')); }
       document.getElementById('btn-check-multi').disabled = true;
-      document.getElementById('btn-check-multi').style.display = 'none';
-      
-      userAnswers[questionIndexInSubtest] = selectedIndices;
-      
-      const btnNext = document.getElementById('btn-next');
-      btnNext.style.display = 'block';
+      document.getElementById('btn-next').style.display = 'block';
     }
 
     function nextQuestion() {
-      questionIndexInSubtest++;
-      currentQuestionIndex++;
-      
-      if (questionIndexInSubtest < subtestSizes[currentSubtest]) {
-        loadQuestion();
-      } else {
-        showSubtestSummary();
-      }
+      questionIndexInSubtest++; currentQuestionIndex++;
+      if (questionIndexInSubtest < subtestSizes[currentSubtest]) loadQuestion();
+      else { subtestScores[currentSubtest] = score; renderSelection(); }
     }
 
-    function showSubtestSummary() {
-      quizMain.style.display = 'none';
-      navDiv.style.display = 'none';
-      
-      // Save Score
-      subtestScores[currentSubtest] = score;
-      const total = subtestSizes[currentSubtest];
-      
-      finishContainer.innerHTML = `
-        <div class="question-container" style="text-align:center;">
-          <h2>Subtest Finalizat!</h2>
-          <p style="font-size:2rem; font-weight:700; color:var(--clr-accent);">
-            ${score} / ${total}
-          </p>
-          <div style="margin-top:2rem;">
-            <button class="btn btn-reset" onclick="retrySubtest()">Refă Subtest</button>
-            <button class="btn btn-check" onclick="renderSelection()">Meniu Principal</button>
-          </div>
-        </div>
-      `;
-      floatingStep.textContent = "Rezumat Subtest";
-    }
-
-    function retrySubtest() {
-      startSubtest(currentSubtest);
-    }
-
-    // Start App
     init();
-
   </script>
 </body>
 </html>
